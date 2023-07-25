@@ -8,10 +8,10 @@ call_user_func(
     function ($extKey) {
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'WapplerSystems.' . $extKey,
+            $extKey,
             'Pi1',
             [
-                'Flexslider' => 'list',
+                WapplerSystems\WsFlexslider\Controller\FlexsliderController::class => 'list',
             ],
             // non-cacheable actions
             []

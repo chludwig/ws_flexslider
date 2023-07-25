@@ -27,9 +27,6 @@ return [
             'default' => 'ext-wsflexslider-image'
         ],
     ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description, fal_image',
-    ],
     'types' => [
         '1' => [
             'showitem' => 'hidden, title, sys_language_uid,
@@ -44,43 +41,30 @@ return [
     ],
     'columns' => [
         'sys_language_uid' => [
-            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple'
-                    ],
-                ],
+                'type' => 'language',
                 'default' => 0,
-            ]
+            ],
         ],
         'l10n_parent' => [
-            'exclude' => true,
             'displayCond' => 'FIELD:sys_language_uid:>:0',
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    [
-                        '',
-                        0
-                    ]
+                    ['', 0]
                 ],
                 'foreign_table' => 'tx_wsflexslider_domain_model_image',
                 'foreign_table_where' => 'AND tx_wsflexslider_domain_model_image.pid=###CURRENT_PID### AND tx_wsflexslider_domain_model_image.sys_language_uid IN (-1,0)',
                 'default' => 0
-            ]
+            ],
         ],
         'l10n_diffsource' => [
             'config' => [
                 'type' => 'passthrough',
+                'default' => '',
             ],
         ],
         't3ver_label' => [
@@ -89,7 +73,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'max' => 255,
-            ]
+            ],
         ],
         'hidden' => [
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.enabled',
@@ -103,7 +87,7 @@ return [
                         0 => '',
                         1 => '',
                         'invertStateDisplay' => true
-                    ]
+                    ],
                 ],
             ]
         ],
@@ -115,7 +99,7 @@ return [
                 'renderType' => 'inputDateTime',
                 'eval' => 'datetime,int',
                 'default' => 0
-            ]
+            ],
         ],
         'endtime' => [
             'exclude' => true,
@@ -125,7 +109,7 @@ return [
                 'renderType' => 'inputDateTime',
                 'eval' => 'datetime,int',
                 'default' => 0
-            ]
+            ],
         ],
         'title' => [
             'exclude' => 0,
@@ -162,7 +146,7 @@ return [
                     [
                         'LLL:EXT:ws_flexslider/Resources/Private/Language/locallang_db.xlf:tx_wsflexslider_domain_model_image.textposition_right',
                         "right"
-                    ]
+                    ],
                 ],
             ],
         ],
@@ -188,7 +172,7 @@ return [
                     [
                         'LLL:EXT:ws_flexslider/Resources/Private/Language/locallang_db.xlf:tx_wsflexslider_domain_model_image.styleclass_style4',
                         "style4"
-                    ]
+                    ],
                 ],
             ],
         ],
@@ -226,7 +210,7 @@ return [
                         'headerThumbnail' => [
                             'height' => '90c',
                             'width' => 90
-                        ]
+                        ],
                     ],
                     'foreign_match_fields' => [
                         'fieldname' => 'fal_image',

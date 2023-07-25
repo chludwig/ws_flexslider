@@ -18,6 +18,8 @@ use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use WapplerSystems\WsFlexslider\Domain\Model\Content;
 use TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
+use WapplerSystems\WsFlexslider\Domain\Repository\ContentRepository;
+use WapplerSystems\WsFlexslider\Domain\Repository\ImageRepository;
 
 /**
  * @package ws_flexslider
@@ -26,17 +28,30 @@ use TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
 class FlexsliderController extends ActionController
 {
     /**
-     * @var \WapplerSystems\WsFlexslider\Domain\Repository\ImageRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
+     * @var ImageRepository
      */
-    protected $imageRepository;
+    public $imageRepository;
     
     /**
-     * @var \WapplerSystems\WsFlexslider\Domain\Repository\ContentRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
+     * @var ContentRepository
      */
-    protected $contentRepository;
+    public $contentRepository;
     
+    /**
+     * Inject classes
+     *
+     * @param ImageRepository $imageRepository
+     * @param ContentRepository $contentRepository
+     * @param FrontendConfigurationManager $feConfigManager
+     * @return void
+     */
+    public function __construct(ImageRepository $imageRepository, ContentRepository $contentRepository, FrontendConfigurationManager $feConfigManager)
+    {
+        $this->imageRepository = $imageRepository;
+        $this->contentRepository = $contentRepository;
+        $this->feConfigManager = $feConfigManager;
+    }
+
     /**
      * initializes all Controller actions
      *
@@ -161,8 +176,7 @@ class FlexsliderController extends ActionController
      */
     public function listAction()
     {
-        $feConfigManager = $this->objectManager->get(FrontendConfigurationManager::class);
-        $ts = $feConfigManager->getTypoScriptSetup();
+        $ts = $this->feConfigManager->getTypoScriptSetup();
 
         // Check Static include
         if (!isset($ts['plugin.']['tx_wsflexslider.']['view.']['templateRootPaths.'])) {
@@ -175,6 +189,8 @@ class FlexsliderController extends ActionController
         $this->view->assign('uid', $contentObject->getUid());
         $this->view->assign('settings', $this->settings);
         $this->view->assign('images', $this->imageRepository->findByContentUid($contentObject->getUid()));
+
+        return $this->htmlResponse();
     }
     
     /**

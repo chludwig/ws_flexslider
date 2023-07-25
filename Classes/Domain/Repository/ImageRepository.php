@@ -32,15 +32,16 @@ class ImageRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
 
     /**
-     * All Queries withoud storagePID
+     * All Queries without storagePID
      *
      * @return QueryInterface
      */
     public function createQuery()
     {
         $query = parent::createQuery();
-        $query->getQuerySettings()->setRespectStoragePage(false);
-        $query->getQuerySettings()->setRespectSysLanguage(false);
+        $query->getQuerySettings()
+            ->setRespectStoragePage(false)
+            ->setRespectSysLanguage(false);
         return $query;
     }
 
